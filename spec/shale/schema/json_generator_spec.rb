@@ -332,6 +332,42 @@ RSpec.describe Shale::Schema::JSONGenerator do
         expect(schema).to eq(expected_schema)
       end
     end
+
+    context 'with validators given' do 
+      context 'with anyOf on type string' do
+        let(:mapper_class) do
+          Class.new(Shale::Mapper) do
+            model :any_of_test
+            attribute :basic_color, Shale::Type::String, nullable: true, validations: { anyOf: %w[blue red yellow] }  
+          end
+        end
+
+        let(:expected_schema) do
+          {
+          '$schema' => 'https://json-schema.org/draft/2020-12/schema',
+          '$ref' => '#/$defs/any_of_test',
+          '$defs' => {
+            'any_of_test' => {
+              "properties"=>{
+                "basic_color"=>{
+                  :anyOf=>["blue", "red", "yellow"],
+                  "type"=>["string", "null"]
+                  }
+                }, "type"=>"object"
+            },
+          },          
+        }
+        end
+
+        it 'generates JSON schema' do
+          schema = described_class.new.as_schema(
+            mapper_class
+          )
+  
+          expect(schema).to eq(expected_schema)
+        end
+      end
+    end
   end
 
   describe '#to_schema' do

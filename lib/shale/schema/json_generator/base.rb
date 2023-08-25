@@ -58,7 +58,7 @@ module Shale
 
           unkown_validations = validations.keys.map(&:to_sym) - (self.class::VALIDATORS.map(&:to_sym) || [])
 
-          raise "Unknown Validator(s): #{unkown_validations.join(', ')}" if unkown_validations.present?
+          raise "Unknown Validator(s): #{unkown_validations.join(', ')}" if unkown_validations.any?
 
           return {} unless self.class.const_defined?(:VALIDATORS)
 
