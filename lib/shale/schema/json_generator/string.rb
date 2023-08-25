@@ -9,7 +9,7 @@ module Shale
       #
       # @api private
       class String < Base
-        VALIDATORS = %w(pattern minLength maxLength)
+        VALIDATORS = %w(pattern minLength maxLength anyOf)
 
         # Return JSON Schema fragment as Ruby Hash
         #

@@ -5,10 +5,12 @@ require_relative 'base'
 module Shale
   module Schema
     class JSONGenerator
+      
       # Class representing JSON Schema date type
       #
       # @api private
       class Date < Base
+        
         # Return JSON Schema fragment as Ruby Hash
         #
         # @return [Hash]

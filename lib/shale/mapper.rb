@@ -177,6 +177,11 @@ module Shale
           raise DefaultNotCallableError.new(to_s, name)
         end
 
+        if type.const_defined?(:VALIDATORS)
+          type.const_get(:VALIDATORS)
+        end
+
+
         @attributes[name] = Attribute.new(name, type, collection, default, nullable, validations, required)
 
         @hash_mapping.map(name.to_s, to: name) unless @hash_mapping.finalized?
